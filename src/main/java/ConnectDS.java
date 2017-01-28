@@ -26,12 +26,11 @@ public class ConnectDS {
         try {
             con = connect();
             ps = con.prepareStatement(insert);
-            //кладем по очереди 1)время 2)ник 3)сообщение
+    /////////////кладем по очереди 1)время 2)ник 3)сообщение /////////////
             ps.setString(1, objMessage.getTime());
             ps.setString(2, objMessage.getNick());
             ps.setString(3, objMessage.getMessage());
             ps.executeUpdate();
-
 
         } catch (NamingException e) {
             e.printStackTrace();
@@ -42,12 +41,10 @@ public class ConnectDS {
         }
     }
 
-    public static ArrayList<ObjMessage> getMessagesFromDB(){
-        String select;
+    public static String getMessagesFromDB(){
         int maxID = 0;
-        ObjMessage FM;
-        ArrayList<ObjMessage> result = new ArrayList<ObjMessage>();
-        result.clear();
+        String msgHistory = "";
+
         try {
             con = connect();
             st = con.createStatement();
@@ -55,25 +52,22 @@ public class ConnectDS {
                     "select * from CHAT where id=(select max(id) from CHAT)");
             rs.next();
             maxID = rs.getInt("ID");
-            System.out.println(maxID);
+            System.out.println("LAST ID ---> [ " + maxID + " ]");
 
-            for(int i=maxID, c=0; c<30 || i==0; c++, i--){
+            for(int i=maxID, c=0; c<50 || i==0; c++, i--){
                 rs = st.executeQuery("SELECT TIME, NICKNAME, MESSAGE FROM CHAT WHERE ID=" + i);
                 while(rs.next()) {
                     System.out.println("||" + rs.getString("MESSAGE") + "||");
-                    FM = new ObjMessage();
-                    FM.setTime(rs.getString("TIME"));
-                    FM.setNick(rs.getString("NICKNAME"));
-                    FM.setMessage(rs.getString("MESSAGE"));
+                    String temp = "";
+                    temp += (rs.getString("TIME")) + " - ";
+                    temp += (rs.getString("NICKNAME")) + ": ";
+                    temp += (rs.getString("MESSAGE")) + "\n";
 
-                    if(FM.getMessage() == null)//проверка  полученного сообщения на null
-                        continue;
-
-                    result.add(FM);
+                    msgHistory = temp + msgHistory;
                 }
             }
             System.out.println("RS [ OK ]");
-            return result;
+            return msgHistory;
 
 
         }catch (NamingException e) {
@@ -83,7 +77,7 @@ public class ConnectDS {
         }finally{
             disconnect();
         }
-        return result;
+        return "empty";
     }
 
 
@@ -110,6 +104,5 @@ public class ConnectDS {
             e.printStackTrace();
         }
     }
-
 
 }

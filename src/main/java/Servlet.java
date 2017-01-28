@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -26,32 +25,23 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
        req.setCharacterEncoding("UTF-8");
 
+     ////////////// обработка ника //////////////
        nickDispatcher(req);
-//        String newNick = req.getParameter("nickname");
-//        if(!(newNick == null))
-//        nickname = req.getParameter("nickname");
 
-        /////////////// обработка полученного сообщения //////////////////
-       message = req.getParameter("message");
-       if(message == null) message = "";
-        if(!(message.equals("")))
-       packing(message, nickname);
-       System.out.println("--first mes------" + message);
-       if(!(message.equals(""))) {
-           answer = Ricky.answer(message);
-           packing(answer, "Ricky");
-       }
-        //////// ответ на страницу //////////////
+     ////////////// обработка полученного сообщения //////////////////
+        msgDispatcher(req.getParameter("message"));
+
+     //////// ответ на страницу //////////////
         resp.setCharacterEncoding("UTF-8");
         PrintWriter writer = resp.getWriter();
-        writer.write(createPage(nickname, chatHistory()));
+        writer.write(createPageChat(nickname, ConnectDS.getMessagesFromDB()));
         resp.addCookie(new Cookie("nickname", nickname));
         writer.close();
         resp.setStatus(HttpServletResponse.SC_OK);
     }
 
-    private String createPage(String nickname, String messages){
-        ////////// создается страница с данными //////////////////
+    private String createPageChat(String nickname, String messages){
+    ////////// создается страница с данными //////////////////
         String page;
         page = Page.getHTMLcode_01() +
                Page.getHTMLcode_02() +
@@ -62,37 +52,33 @@ public class Servlet extends HttpServlet {
         return page;
     }
 
-    private void packing(String message, String nick){
-        /////////// формирование времени и даты поступления сообщения////////
+
+    private void msgDispatcher(String message) {
+    ///////////// проверка на null и пустое сообщение //////////////
+        if (message == null) message = "";
+        if (!(message.equals(""))) {
+    /////////// сохранение в бд сообщений /////////////
+            packingMes(message, nickname);
+            System.out.println("--FIRST MESS------>>> [ " + message + " ]");
+            answer = Ricky.answer(message);
+            packingMes(answer, "Ricky");
+        }
+    }
+
+    private void packingMes(String message, String nick){
+    /////////// формирование времени и даты поступления сообщения////////
         Date curTime = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat();
         String present = sdf.format(curTime);
 
-        /////////// формирование объекта сообщения///////////
+    /////////// формирование объекта сообщения///////////
         ObjMessage packagedFullMessage = new ObjMessage();
         packagedFullMessage.setTime(present);
         packagedFullMessage.setNick(nick);
         packagedFullMessage.setMessage(message);
 
-        /////////// отправка сформированного сообщения в бд /////////
+    /////////// отправка сформированного сообщения в бд /////////
         ConnectDS.putMessageToDB(packagedFullMessage);
-    }
-
-        private String chatHistory(){
-        /////////// забираем 30 последних сообщений с БД //////////////
-        ArrayList<ObjMessage> history = ConnectDS.getMessagesFromDB();
-        String chatHistory = "";
-
-        ///////// формируем историю сообщений /////////////
-        for(ObjMessage om : history){
-            String mesOneLine = "";
-            mesOneLine += om.getTime() + " - ";
-            mesOneLine += om.getNick() + ": ";
-            mesOneLine += om.getMessage() + "\n";
-
-            chatHistory = mesOneLine + chatHistory;
-        }
-            return chatHistory;
     }
 
     ///////////// диспетчер ника следит за его изменениями ////////////////////
