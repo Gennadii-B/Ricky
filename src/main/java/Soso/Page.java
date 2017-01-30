@@ -1,4 +1,4 @@
-package main.java;
+package main.java.Soso;
 
 /**
  * Created by N on 26.01.2017.

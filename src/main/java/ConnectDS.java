@@ -6,7 +6,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
 
 /**
  * Created by N on 26.01.2017.
@@ -22,16 +21,15 @@ public class ConnectDS {
             "INSERT INTO CHAT (TIME, NICKNAME, MESSAGE) VALUES (?, ?, ?)";
 
 
-    public static void putMessageToDB(ObjMessage objMessage){
+    public static void putMessageToDB(String date, String msg, String nick){
+
         try {
             con = connect();
             ps = con.prepareStatement(insert);
-    /////////////кладем по очереди 1)время 2)ник 3)сообщение /////////////
-            ps.setString(1, objMessage.getTime());
-            ps.setString(2, objMessage.getNick());
-            ps.setString(3, objMessage.getMessage());
+            ps.setString(1, date);
+            ps.setString(2, nick);
+            ps.setString(3, msg);
             ps.executeUpdate();
-
         } catch (NamingException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -57,7 +55,7 @@ public class ConnectDS {
             for(int i=maxID, c=0; c<50 || i==0; c++, i--){
                 rs = st.executeQuery("SELECT TIME, NICKNAME, MESSAGE FROM CHAT WHERE ID=" + i);
                 while(rs.next()) {
-                    System.out.println("||" + rs.getString("MESSAGE") + "||");
+//                    System.out.println("||" + rs.getString("MESSAGE") + "||");
                     String temp = "";
                     temp += (rs.getString("TIME")) + " - ";
                     temp += (rs.getString("NICKNAME")) + ": ";

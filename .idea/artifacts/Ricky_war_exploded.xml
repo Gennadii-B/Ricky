@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="Ricky:war exploded">
-    <output-path>$PROJECT_DIR$/target/ricky</output-path>
+    <output-path>$PROJECT_DIR$/target/Ricky</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -9,10 +9,11 @@
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
           <element id="library" level="project" name="Maven: org.freemarker:freemarker:2.3.20" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.3" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/ricky/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/Ricky/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="Ricky/web/Web" />
     </root>
