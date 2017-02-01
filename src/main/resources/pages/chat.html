@@ -2,34 +2,69 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <-meta http-equiv="refresh" content="10; URL=./"><-WRAP="virtual" COLS="50" ROWS="25">
+    <-meta http-equiv="refresh" content="10; URL=./chat">
     <title>CHAT 88</title>
+
 </head>
 <body>
-<div id="container">
-    <div id="centr">Ricky<br/><br/></div>
+        <div id="container">
+            <form action="" method="post">
+                <a href='/Ricky/chat' class='button'>Чат</a>
+                <a href='/Ricky/login' class='button'>Авторизация</a>
+                <a href='/Ricky/registration' class='button'>Регистрация</a>
+                <input class='button' type="submit" name="logout" value="Выход"/>
+            </form>
+        </div>
 
-    <FORM action="chat" method="get">
-        История чата:<br/>
+        <div id="container_list_users">
+            <h3>Пользователи</h3>
 
-                <TEXTAREA readonly="readonly"WRAP="virtual" ROWS="20">${messages}</TEXTAREA><br><br>
+            <textarea style="width: 100%" ROWS="30">
+                ${users}
+            </textarea>
 
-        Ник пользователя:<br/>
-                <TEXTAREA name="nickname" ROWS="1" placeholder="введите ник">${nickname}</TEXTAREA><br/>
-        Сообщение:<br/>
-            <TEXTAREA NAME="message" WRAP="virtual" maxlength="200" placeholder="введите сообщение" COLS="60" ROWS="3"></TEXTAREA><br>
+        </div>
 
-            <INPUT TYPE="submit" VALUE="Отправить">
-            <input type="reset" value="Сброс"><br/>
-
-    </FORM>
-</div>
+        <div id="container_chat">
+        <div id="centr">Ricky<br/><br/></div>
+                <FORM action="chat" method="post">
+                    История чата:<br/>
+                    <TEXTAREA onload="move" readonly="readonly" WRAP="virtual" ROWS="20">${messages}</TEXTAREA><br><br>
+                    Ник пользователя:<br/>
+                    <TEXTAREA id="centro" readonly="readonly" name="nickname" ROWS="1">${nickname}</TEXTAREA><br/>
+                     Сообщение:<br/>
+                    <TEXTAREA NAME="message" WRAP="virtual" maxlength="200" placeholder="введите сообщение" COLS="60" ROWS="3"></TEXTAREA><br>
+                    <INPUT class='button' TYPE="submit" VALUE="Отправить">
+                    <input class='button' type="reset" value="Сброс"><br/>
+                </FORM>
+        </div>
 
 <style>
+
+        #container_list_users{
+            font-family: 'Roboto', sans-serif;
+            font-size:16px;
+            padding: 8px;
+            border: 1px solid #475cd4;
+            color: #3d3d3f;
+            width: 150px;
+            height: 700px;
+            border-radius: 7px;
+            box-shadow: 17px 15px 15px #323232;
+            float:left;
+            position:relative;
+            left: 27%;
+        }
+
 
         #centr{
             text-align: center;
             font-size: 30px;
+        }
+
+        #centro{
+            text-align: center;
+            font-size: 22px;
         }
 
         textarea {
@@ -37,22 +72,82 @@
         resize: none;
         font-size:17px;
         /*margin: 0 auto 4px;*/
-        border: 4px solid #0d8a1b;
+        border: 4px solid #475cd4;
         /*padding: 2px;*/
         width: 448px;
     }
 
-    #container{
+    #container_chat{
         font-family: 'Roboto', sans-serif;
         font-size:16px;
         padding: 8px;
         border: 1px solid #0b1454;
         color: #3d3d3f;
         width: 450px;
-        margin: 70px auto;
+        margin: 20px auto;
         border-radius: 7px;
         box-shadow: 17px 15px 15px #323232;
     }
+
+
+        #container {
+            padding: 10px;
+            border: 1px solid #0b1454;
+            color: #3d3d3f;
+            width: 430px;
+            height: 40px;
+            margin: 70px auto;
+            border-radius: 7px;
+            box-shadow: 17px 15px 15px #323232;
+        }
+
+        .button {
+            border: 1px solid #0a3c59;
+            background: #3e779d;
+            background: -webkit-gradient(linear, left top, left bottom, from(#65a9d7), to(#3e779d));
+            background: -webkit-linear-gradient(top, #65a9d7, #3e779d);
+            background: -moz-linear-gradient(top, #65a9d7, #3e779d);
+            background: -ms-linear-gradient(top, #65a9d7, #3e779d);
+            background: -o-linear-gradient(top, #65a9d7, #3e779d);
+            background-image: -ms-linear-gradient(top, #65a9d7 0%, #3e779d 100%);
+            padding: 10.5px 21px;
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+            border-radius: 4px;
+            -webkit-box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+            -moz-box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+            box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+            text-shadow: #7ea4bd 0 1px 0;
+            color: #06426c;
+            font-size: 14px;
+            font-family: helvetica, serif;
+            text-decoration: none;
+            vertical-align: middle;
+        }
+        .button:hover {
+            border: 1px solid #0a3c59;
+            text-shadow: #1e4158 0 1px 0;
+            background: #3e779d;
+            background: -webkit-gradient(linear, left top, left bottom, from(#65a9d7), to(#3e779d));
+            background: -webkit-linear-gradient(top, #65a9d7, #3e779d);
+            background: -moz-linear-gradient(top, #65a9d7, #3e779d);
+            background: -ms-linear-gradient(top, #65a9d7, #3e779d);
+            background: -o-linear-gradient(top, #65a9d7, #3e779d);
+            background-image: -ms-linear-gradient(top, #65a9d7 0%, #3e779d 100%);
+            color: #fff;
+        }
+        .button:active {
+            text-shadow: #1e4158 0 1px 0;
+            border: 1px solid #0a3c59;
+            background: #65a9d7;
+            background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#3e779d));
+            background: -webkit-linear-gradient(top, #3e779d, #65a9d7);
+            background: -moz-linear-gradient(top, #3e779d, #65a9d7);
+            background: -ms-linear-gradient(top, #3e779d, #65a9d7);
+            background: -o-linear-gradient(top, #3e779d, #65a9d7);
+            background-image: -ms-linear-gradient(top, #3e779d 0%, #65a9d7 100%);
+            color: #fff;
+        }
 </style>
 
 </body>

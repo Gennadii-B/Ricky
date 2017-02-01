@@ -1,11 +1,11 @@
-package main.java.servlets;
+package main.java.filters;
 
-import main.java.User;
+import main.java.entity.User;
 import org.apache.commons.lang3.StringUtils;
-
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Arrays;
@@ -17,12 +17,13 @@ import java.util.List;
 public class AuthFilter implements Filter {
 
     private List<String> pathFilters = Arrays.asList
-            (new String[]{"chat"});
+            (new String[]{"login", "home", "registration"});
 
     public AuthFilter() {
     }
 
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig)
+            throws ServletException {
 
     }
 
@@ -31,6 +32,7 @@ public class AuthFilter implements Filter {
 
         String uri = ((HttpServletRequest)req).getRequestURI();
         String path = StringUtils.substringAfterLast(uri, "/");
+        System.out.println("authFILTER");
 
         if(pathFilters.contains(path)){
             filterChain.doFilter(req, resp);
@@ -45,7 +47,7 @@ public class AuthFilter implements Filter {
             return;
         }
 
-//        ((HttpServletResponse) resp).sendRedirect("login/123");
+        ((HttpServletResponse) resp).sendRedirect("login");
     }
 
     public void destroy() {

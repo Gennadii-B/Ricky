@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class LogoutServlet extends HttpServlet {
 
-    private static final long serialVersionUID = 3222356436436L;
+    private static final long serialVersionUID = 1003L;
 
     public LogoutServlet() {}
 
@@ -21,7 +21,7 @@ public class LogoutServlet extends HttpServlet {
             throws ServletException, IOException {
 
         req.getSession().invalidate();
-        RequestDispatcher rD = getServletContext().getRequestDispatcher("/home");
+        RequestDispatcher rD = getServletContext().getRequestDispatcher("/login");
         rD.forward(req, resp);
 
     }

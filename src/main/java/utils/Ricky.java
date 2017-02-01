@@ -1,4 +1,4 @@
-package main.java.servlets;
+package main.java.utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,9 +7,9 @@ import java.util.Set;
 
 /**
  * Created by N on 26.01.2017.
+ * простой чатбот для демонстрации работы чата
  */
 public class Ricky {
-    private static String ans;
     private static Set keys;
     private static HashMap<String, String> thoughts = new HashMap<String, String>();
 
@@ -25,7 +25,7 @@ public class Ricky {
         keys = thoughts.keySet();
     }
 
-    static String answer(String message){
+    public static String answer(String message){
         if(thoughts.size() <1) init();
         String ans = "не понимаю тебя(";
         for(Map.Entry<String, String> m : thoughts.entrySet()){

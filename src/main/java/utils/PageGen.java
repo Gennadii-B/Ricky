@@ -1,4 +1,4 @@
-package main.java;
+package main.java.utils;
 
 import freemarker.template.*;
 
@@ -30,7 +30,7 @@ public class PageGen {
             cfg.setClassForTemplateLoading(this.getClass(), "/");
             Template template = cfg.getTemplate
                     (HTML_DIR + File.separator + filename, "UTF-8");
-            System.out.println("TEMPLATE ENCODING [" + template.getEncoding() + "]");
+            System.out.println("Page LOADING * [ " + filename + " ]");
             template.process(data, stream);
         } catch (IOException e) {
             e.printStackTrace();

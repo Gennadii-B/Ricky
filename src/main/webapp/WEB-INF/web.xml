@@ -7,17 +7,12 @@
 
   <servlet>
     <servlet-name>GenServlet</servlet-name>
-    <servlet-class>main.java.servlets.GenServlet</servlet-class>
+    <servlet-class>main.java.servlets.ChatServlet</servlet-class>
   </servlet>
 
   <servlet>
     <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>main.java.servlets.LoginServlet2</servlet-class>
-  </servlet>
-
-  <servlet>
-    <servlet-name>Home</servlet-name>
-    <servlet-class>main.java.servlets.Home</servlet-class>
+    <servlet-class>main.java.servlets.LoginServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -30,19 +25,24 @@
     <url-pattern>/chat</url-pattern>
   </servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>Home</servlet-name>
-    <url-pattern>/home</url-pattern>
-  </servlet-mapping>
-
   <filter>
       <filter-name>authFilter</filter-name>
-      <filter-class>main.java.servlets.AuthFilter</filter-class>
+      <filter-class>main.java.filters.AuthFilter</filter-class>
   </filter>
 
   <filter-mapping>
     <filter-name>authFilter</filter-name>
-    <servlet-name>LoginServlet2</servlet-name>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
+
+  <servlet>
+    <servlet-name>Reg</servlet-name>
+    <servlet-class>main.java.servlets.RegServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Reg</servlet-name>
+    <url-pattern>/registration</url-pattern>
+  </servlet-mapping>
 
 </web-app>
