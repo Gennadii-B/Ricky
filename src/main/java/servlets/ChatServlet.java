@@ -1,5 +1,7 @@
 package main.java.servlets;
 
+import main.java.dao.MessagesDao;
+import main.java.dao.UserListDao;
 import main.java.entity.User;
 import main.java.dao.ConnectDS;
 import main.java.utils.PageGen;
@@ -21,7 +23,7 @@ public class ChatServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1000L;
     private String nickname;
-    Cookie[] cookie;
+//    Cookie[] cookie;
     Map<String, Object> pageVar;
     PageGen pageGen = PageGen.getInstance();
     String msg = "";
@@ -37,11 +39,13 @@ public class ChatServlet extends HttpServlet {
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
+
      ///////// функционал кнопки logout ///////////////
         String logout = req.getParameter("logout");
         if(logout != null && logout.equals("Выход")){
             req.getSession().invalidate();
             resp.sendRedirect("login");
+    ///////////////////////////////////////////////////
         }
 
      ////////////// обработка ника //////////////
@@ -74,7 +78,7 @@ public class ChatServlet extends HttpServlet {
 
     private void packingMsg(String message, String nick){
     /////////// формирование времени и даты поступления сообщения////////
-        ConnectDS.putMessageToDB(message, nick);
+        MessagesDao.putMessageToDB(message, nick);
     }
 
     ///////////// диспетчер ника следит за его изменениями ////////////////////
@@ -82,7 +86,7 @@ public class ChatServlet extends HttpServlet {
             throws UnsupportedEncodingException{
 
         HttpSession session = req.getSession();
-        User user = (User) session.getAttribute("PRINCIPAL");
+        User user = (User) session.getAttribute("LOGIN_USER");
         String uName = user.getNickname();
 
         if(uName != null)nickname = uName;
@@ -96,8 +100,8 @@ public class ChatServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         Map<String, Object> Var = new HashMap<String, Object>();
         Var.put("nickname", nickname);
-        Var.put("messages", ConnectDS.getMessagesFromDB());
-        Var.put("users", ConnectDS.getUsers());
+        Var.put("messages", MessagesDao.getMessagesFromDB());
+        Var.put("users", UserListDao.getUsers());
 
         return Var;
     }

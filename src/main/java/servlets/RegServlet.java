@@ -1,6 +1,7 @@
 package main.java.servlets;
 
 import main.java.dao.ConnectDS;
+import main.java.dao.UserListDao;
 import main.java.utils.PageGen;
 
 import javax.servlet.ServletException;
@@ -32,7 +33,7 @@ public class RegServlet extends HttpServlet {
         if(login != null) {
             String password = req.getParameter("pass");
             String nickname = req.getParameter("nickname");
-            ConnectDS.regNewUser(login, password, nickname);
+            UserListDao.regNewUser(login, password, nickname);
         }
 
         Writer out = resp.getWriter();

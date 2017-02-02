@@ -1,5 +1,7 @@
 package main.java.servlets;
 
+import main.java.dao.CreatorTables;
+import main.java.dao.UserListDao;
 import main.java.entity.User;
 import main.java.dao.ConnectDS;
 import main.java.utils.PageGen;
@@ -31,6 +33,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+//        CreatorTables.newTables();
         String login = req.getParameter("login");
         String pass =  req.getParameter("pass");
 
@@ -39,10 +42,10 @@ public class LoginServlet extends HttpServlet {
         ////////////
 
         System.out.println("[INF] LOGIN [ before ]");
-        user = ConnectDS.userSearch(login, pass);
+        user = UserListDao.userSearch(login, pass);
         if(user != null){
             System.out.println("[INF] LOGIN [ process ]");
-            session.setAttribute("PRINCIPAL", user);
+            session.setAttribute("LOGIN_USER", user);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/chat");
             rd.forward(req, resp);
         }

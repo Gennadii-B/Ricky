@@ -1,5 +1,6 @@
 package main.java.filters;
 
+import main.java.dao.CreatorTables;
 import main.java.entity.User;
 import org.apache.commons.lang3.StringUtils;
 
@@ -30,6 +31,9 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain)
             throws IOException, ServletException {
 
+        CreatorTables.TEST();
+        CreatorTables.TEST2();
+
         String uri = ((HttpServletRequest)req).getRequestURI();
         String path = StringUtils.substringAfterLast(uri, "/");
         System.out.println("authFILTER");
@@ -40,7 +44,7 @@ public class AuthFilter implements Filter {
         }
 
         HttpSession session =((HttpServletRequest)req).getSession();
-        User user = (User) session.getAttribute("PRINCIPAL");
+        User user = (User) session.getAttribute("LOGIN_USER");
 
         if(user != null){
             filterChain.doFilter(req, resp);
