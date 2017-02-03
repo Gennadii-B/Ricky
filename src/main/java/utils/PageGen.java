@@ -30,7 +30,7 @@ public class PageGen {
             cfg.setClassForTemplateLoading(this.getClass(), "/");
             Template template = cfg.getTemplate
                     (HTML_DIR + File.separator + filename, "UTF-8");
-            System.out.println("Page LOADING * [ " + filename + " ]");
+            System.out.println("[LOADING]Page LOADING * [ " + filename + " ]");
             template.process(data, stream);
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,6 +1,6 @@
 package main.java.servlets;
 
-import main.java.dao.ConnectDS;
+import main.java.dao.CreatorTables;
 import main.java.dao.UserListDao;
 import main.java.utils.PageGen;
 
@@ -28,6 +28,8 @@ public class RegServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
+
+        CreatorTables.newTables();
 
         String login = req.getParameter("login");
         if(login != null) {

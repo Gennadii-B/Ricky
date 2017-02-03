@@ -46,8 +46,8 @@ public class UserListDao {
             ps.setString(2, login);//log
             ps.setString(3, pass);//pass
             ps.setString(4, ConnectDS.timeNow());//time
-            System.out.println("REG [ OK ]");
             ps.executeUpdate();
+            System.out.println("[INF] REGISTRATION [ OK ]");
 
         }catch(SQLException e){
             e.printStackTrace();
@@ -73,12 +73,12 @@ public class UserListDao {
                     u.setRegData(rs.getString("DATA_REGISTRATION"));
                     u.setId(rs.getInt("ID"));
 
-                    System.out.println("[ OK ] login [ " + u.getNickname() + " ]");
+                    System.out.println("[INF] login [ " + u.getNickname() + " ]");
                     return u;
                 }
             }
         }catch(NullPointerException e){
-            System.out.println("nullPOINTER");
+            System.out.println("[ERR] nullPOINTER");
         }catch (SQLException e) {
             e.printStackTrace();
         }finally {

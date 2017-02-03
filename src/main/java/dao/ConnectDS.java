@@ -32,11 +32,11 @@ public class ConnectDS {
         try {
             Context context;
             Connection con;
-            System.out.println("connect");
+            System.out.println("[DB_INF] connect");
             context = new InitialContext();
             ds = (DataSource) context.lookup("PostgresDS");
             con = ds.getConnection();
-            System.out.println("connect [ OK ]");
+            System.out.println("[DB_INF] connect [ OK ]");
             return con;
         }catch (NamingException e) {
                 e.printStackTrace();
@@ -53,7 +53,7 @@ public class ConnectDS {
             if(st != null)st.close();
             if(ps != null) ps.close();
             if(con != null)con.close();
-            System.out.println("disconnect");
+            System.out.println("[DB_INF] disconnect");
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,6 +1,5 @@
 package main.java.filters;
 
-import main.java.dao.CreatorTables;
 import main.java.entity.User;
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,12 +30,10 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain)
             throws IOException, ServletException {
 
-        CreatorTables.TEST();
-        CreatorTables.TEST2();
 
         String uri = ((HttpServletRequest)req).getRequestURI();
         String path = StringUtils.substringAfterLast(uri, "/");
-        System.out.println("authFILTER");
+        System.out.println("[INF] AUTH_FILTER WORK");
 
         if(pathFilters.contains(path)){
             filterChain.doFilter(req, resp);

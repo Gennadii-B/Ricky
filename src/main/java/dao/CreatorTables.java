@@ -16,46 +16,17 @@ public class CreatorTables {
             "    nickname character varying COLLATE pg_catalog.\"default\",\n" +
             "    login character varying COLLATE pg_catalog.\"default\",\n" +
             "    password character varying COLLATE pg_catalog.\"default\",\n" +
-            "    id integer NOT NULL DEFAULT nextval('chat_users_id_seq'::regclass),\n" +
+            "    id serial PRIMARY KEY,\n" +
             "    data_registration character varying COLLATE pg_catalog.\"default\")";
-    private static String sqlTableChat = "CREATE TABLE public.\"chat\"\n" +
+
+    private static String sqlTableChat = "CREATE TABLE public.chat\n" +
             "(\n" +
-            "    id integer NOT NULL DEFAULT nextval('\"Chat_id_seq\"'::regclass),\n" +
+            "    id serial PRIMARY KEY,\n" +
             "    time character varying COLLATE pg_catalog.\"default\",\n" +
             "    nickname character varying COLLATE pg_catalog.\"default\",\n" +
-            "    message character varying COLLATE pg_catalog.\"default\",\n" +
-            "    CONSTRAINT Chat_pkey PRIMARY KEY (id)\n" +
-            ")";
+            "    message character varying COLLATE pg_catalog.\"default\"\n" +
+            ");";
 
-
-
-    public static void TEST(){
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        try{
-            con = ConnectDS.connect();
-            st = con.createStatement();
-            st.execute(sqlTableChat);
-            System.out.println(" [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK]");
-        }catch(SQLException e){
-            e.printStackTrace();
-        }finally{
-            ConnectDS.disconnect(con,ps,st,rs);
-        }
-    }
-
-    public static void TEST2(){
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        try{
-            con = ConnectDS.connect();
-            st = con.createStatement();
-            st.execute(sqlTableChatUsers);
-            System.out.println(" [OK] [OK] [OK] [OK] [OK] [OK] [OK] [OK]");
-        }catch(SQLException e){
-            e.printStackTrace();
-        }finally{
-            ConnectDS.disconnect(con,ps,st,rs);
-        }
-    }
 
     public static void newTables(){
         String select = "SELECT * FROM INFORMATION_SCHEMA.TABLES";
@@ -71,18 +42,20 @@ public class CreatorTables {
             temp = rs.getString("TABLE_NAME");
             if(temp.equals("chat"))isHaveTableChat = true;
             if(temp.equals("chat_users")) isHaveTableChatUsers = true;
-            System.out.println(isHaveTableChat + "|" + isHaveTableChatUsers);
+          //////////////////////////////////////////////////////////////
+            if(isHaveTableChat == true && isHaveTableChatUsers == true)
+                break;
         }
 
-        if(!(isHaveTableChat)) {
-//            createNewTable(con, sqlTableChat);
+        if(!isHaveTableChat){
             st.execute(sqlTableChat);
-            System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
+            System.out.println("[DB_INF] Table \"chat\" created");
         }
-//        if(!(isHaveTableChatUsers)) {
-//            createNewTable(con, sqlTableChatUsers);
-//            System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-//        }
+        if(!isHaveTableChatUsers){
+            st.execute(sqlTableChatUsers);
+            System.out.println("[DB_INF] Table \"chat_users\" created");
+        }
+
     } catch (SQLException e) {
             e.printStackTrace();
     }finally{

@@ -45,7 +45,7 @@ public class MessagesDao {
                     "select * from CHAT where id=(select max(id) from CHAT)");
             rs.next();
             maxID = rs.getInt("ID");
-            System.out.println("LAST ID ---> [ " + maxID + " ]");
+            System.out.println("[INF] LAST ID ---> [ " + maxID + " ]");
 
             for(int i=maxID, c=0; c<50 || i==0; c++, i--){
                 rs = st.executeQuery("SELECT TIME, NICKNAME, MESSAGE FROM CHAT WHERE ID=" + i);
@@ -58,7 +58,7 @@ public class MessagesDao {
                     msgHistory = temp + msgHistory;
                 }
             }
-            System.out.println("RS [ OK ]");
+            System.out.println("[INF] RS [ OK ]");
             return msgHistory;
 
         } catch (SQLException e) {
@@ -66,6 +66,6 @@ public class MessagesDao {
         }finally{
             disconnect(con, ps, st, rs);
         }
-        return "empty";
+        return "История пуста...";
     }
 }
